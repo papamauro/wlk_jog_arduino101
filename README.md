@@ -58,7 +58,7 @@ In order to convert G units to bytes we need to multiply G to the LSB sensitivit
 After asking to dataset authors <a href="https://github.com/mmalekzadeh/motion-sense/issues/1">which was the sensivity level used (±8g: 4096 LSB/g)</a>, I was finally able to properly convert gravity units in bytes by multiplying for 4096 constant.
 
 # Extra hardware
-To run the script an sd card reader is needed. Information about how to set it up card can be found <a href="https://www.monocilindro.com/2016/04/17/arduinogenuino-101-and-sd-card-module/">here</a>. The sd-card must contain the folders <b>B_Accelerometer_data/wlk_7</b> and <b>B_Accelerometer_data/wlk_9</b> that can be downloaded <a href="https://github.com/mmalekzadeh/motion-sense/tree/master/data">here</a>.
+To run the script an sd card reader is needed. Information about how to set it up can be found <a href="https://www.monocilindro.com/2016/04/17/arduinogenuino-101-and-sd-card-module/">here</a>. The sd-card must contain the folders <b>B_Accelerometer_data/wlk_7</b> and <b>B_Accelerometer_data/wlk_9</b> that can be downloaded <a href="https://github.com/mmalekzadeh/motion-sense/tree/master/data">here</a>.
 
 # Script overview
 For a breaf introduction to Arduino 101 board and CuriePME library please refer to Intel <a href="https://github.com/intel/Intel-Pattern-Matching-Technology/tree/master/examples/DrawingInTheAir">DrawingInTheAir</a> example.
