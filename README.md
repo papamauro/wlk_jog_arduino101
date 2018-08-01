@@ -65,6 +65,42 @@ For a breaf introduction to Arduino 101 board and CuriePME library please refer 
 This script opens the 48 (24+24) files of the dataset three times, for a total of 144 file accesses. 128 times files are opened to train board neurons, the rest is used to classify movements. Opening file order is randomly-chosen. <b>Of course, when a file is opened multiple times (for both training or classifying), the scripts always picks a different range of samples</b>. As said before I chose to discard x and z axes to work only with y axis. y values are then converted in bytes and mapped to a single byte value, so that every y-sample is related to a single byte and a neuron can contain (at least) a full pattern inside (see <i>Dataset overview</i> section above). After some approaches tried this turned out to be the most efficient one. Mapping function needs to know the dataset max and min value which of course are ±32768 (±8g * 4096).
 
 ```cpp
+void readFromFile(int index, String fileName, byte vector[])
+{
+    double y;
+    unsigned int skip;
+   
+    File myFile;
+    Serial.print(fileName);
+    Serial.print("\n");
+    myFile=SD.open(fileName.c_str());
+
+    if (myFile) {
+
+      if(fileName.charAt(0)==106)
+        skip = 500 + ((3-jog[index])*200);
+      else
+        skip = 500 + ((3-wlk[index])*200);
+        
+      for (unsigned int j = 0; j < skip && myFile.available(); j++)
+        myFile.readStringUntil('\n'); //Skip lines
+
+      for (unsigned int i = 0; i < vectorNumBytes && myFile.available(); i++) {
+        
+        myFile.readStringUntil(',');
+        myFile.readStringUntil(',');
+        String yString = myFile.readStringUntil(',');
+        myFile.readStringUntil('\n');
+        
+        y = atof(yString.c_str());
+        y = y*4096;
+        
+        vector[i] = (byte) map(y, DataSetMin, DataSetMax, 0, 255);
+        }
+    }
+    myFile.close();
+}
+
 ```
 
 # Classification results
